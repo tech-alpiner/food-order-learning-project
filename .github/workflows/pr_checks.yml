@@ -1,0 +1,21 @@
+name: PR checks
+on:
+  pull_request:
+
+jobs:
+  flake8:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v3
+      - name: Set up Python environment
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.8"
+      - name: flake8 Lint
+        uses: reviewdog/action-flake8@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          flake8_args: --config=.flake8 gulfstream
+          reporter: github-pr-review
+          fail_on_error: true
